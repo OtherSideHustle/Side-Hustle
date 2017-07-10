@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "webpack": "./node_modules/.bin/webpack -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "es6-loader": "^0.2.0",
     "isomorphic-fetch": "^2.2.1",
     "jsx-loader": "^0.13.2",
+    "mocha": "^3.4.2",
     "react-dom": "^15.2.1",
     "sass-loader": "^6.0.6",
     "ts-loader": "^2.2.2",
