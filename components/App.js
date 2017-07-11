@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import ViewJob from './viewJob.js';
 import Job from './Job.js';
+import Navbar from './Navbar.js';
 import FormOfInformation from './Form.js';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import createBrowserHistory from 'history/createBrowserHistory'
 import $ from 'jquery';
 import mapController from './../controller/mapController'
 
@@ -11,8 +13,8 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        this.removeFloatFromRoot = this.removeFloatFromRoot.bind(this);
-        this.addFloatFromRoot = this.addFloatFromRoot.bind(this);
+        //this.removeFloatFromRoot = this.removeFloatFromRoot.bind(this);
+        //this.addFloatFromRoot = this.addFloatFromRoot.bind(this);
     }
 
     retrieveDataFromServer() {
@@ -34,48 +36,61 @@ class App extends Component {
         console.log('passed');
     }
 
-    removeFloatFromRoot() {
-        let root = document.getElementById('root');
-        if (root.style.float = 'right') root.style.float = 'none';
-    }
+    // removeFloatFromRoot() {
+    //     let root = document.getElementById('root');
+    //     if (root.style.float = 'right') root.style.float = 'none';
+    // }
 
-    addFloatFromRoot() {
-        let root = document.getElementById('root');
-        if (root.style.float = 'none') root.style.float = 'right';
-    }
+    // addFloatFromRoot() {
+    //     let root = document.getElementById('root');
+    //     if (root.style.float = 'none') root.style.float = 'right';
+    // }
 
     render() {
         // ViewJob Component with relevant props passed down 
+            const customHistory = createBrowserHistory();
+
+            const navBar = (props) => {
+            return (
+                <Navbar />
+            );
+            }
+
         const viewJob = (props) => {
             return (
                 <ViewJob jobs={this.state.jobs} />
             );
         }
-        const styles = {
-            float: 'none',
-            'text-align': 'center',
-        }
+        // const styles = {
+        //     float: 'none',
+        //     'text-align': 'center',
+        // }
 
         const form = (props) => {
             return (
-                <FormOfInformation style={styles} />
+                <FormOfInformation />
+                // <FormOfInformation style={styles} />
             )
         }
         
         return (
             // React Router is used to render components based on the route specified
-            <Router>
-                <div>
-                    <ul>
-                        <button onClick={this.removeFloatFromRoot}><Link to="/PostJob">PostJob</Link></button>
-                        <button onClick={this.addFloatFromRoot}><Link to="/ViewJob">ViewJob</Link></button>
-                        {/*<button onClick={this.retrieveDataFromServer}></button>*/}
-                    </ul>
-                <div id='postjob'>
+            
+            <Router history={customHistory}>
+                    {/*<ul>
+                        <button ><Link 
+                        to="/PostJob">PostJob</Link></button>
+                        <button >
+                            <Link to="/ViewJob">ViewJob</Link></button>
+                    </ul>*/}
+                    <div>
+                        
+                   <Route path="/" component={navBar} />
+                    <div id='postjob'>
                    <Route path="/PostJob" component={form} />
-                </div>
+                    </div>
                    <Route path="/ViewJob" component={viewJob} />
-                </div>
+                   </div>
             </Router>
         )
     }

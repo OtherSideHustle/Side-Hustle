@@ -31,8 +31,8 @@ class ViewJob extends Component {
     }
 
     parseDataFromServer() {
-      console.log('data');
       let data = mapController.data; 
+      console.log('data parsedatafrom server', data);
       let validLocations = mapController.getDistance(data);
        validLocations.then(jobdata => {
          mapController.filteredData = jobdata;
@@ -43,6 +43,7 @@ class ViewJob extends Component {
 
     render() {
         let data = this.props.jobs;
+        console.log('data in render', data)
         let jobs = data.map((dataPoint, index) => {
             return <Job title={dataPoint.title} index={index} description={dataPoint.description} pay={dataPoint.pay} location={dataPoint.address} onClick={() => console.log(index)}/>
         });
