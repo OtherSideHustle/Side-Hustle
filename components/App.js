@@ -5,7 +5,6 @@ import Job from './Job.js';
 import Navbar from './Navbar.js';
 import FormOfInformation from './Form.js';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import createBrowserHistory from 'history/createBrowserHistory'
 import $ from 'jquery';
 import mapController from './../controller/mapController'
 
@@ -13,11 +12,10 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-        //this.removeFloatFromRoot = this.removeFloatFromRoot.bind(this);
-        //this.addFloatFromRoot = this.addFloatFromRoot.bind(this);
     }
 
     retrieveDataFromServer() {
+        console.log('running')
         $.get('http://localhost:3000/api', (data) => {
           this.parseDataFromServer(data);
         });
@@ -28,27 +26,19 @@ class App extends Component {
        validLocations.then(jobdata => {
          mapController.filteredData = jobdata;
          this.setState({'jobs': jobdata})
+         sessionStorage.setItem('jobs', JSON.stringify(jobdata));
        });
     }
     // Creates a job component for each job request in the database
     componentDidMount() {
         this.retrieveDataFromServer();
         console.log('passed');
+        console.log('from session', sessionStorage.getItem('jobs'));
+        console.log(JSON.parse(sessionStorage.getItem('jobs')))
     }
-
-    // removeFloatFromRoot() {
-    //     let root = document.getElementById('root');
-    //     if (root.style.float = 'right') root.style.float = 'none';
-    // }
-
-    // addFloatFromRoot() {
-    //     let root = document.getElementById('root');
-    //     if (root.style.float = 'none') root.style.float = 'right';
-    // }
 
     render() {
         // ViewJob Component with relevant props passed down 
-            const customHistory = createBrowserHistory();
 
             const navBar = (props) => {
             return (
@@ -57,41 +47,29 @@ class App extends Component {
             }
 
         const viewJob = (props) => {
+            console.log('state jobs', this.state.jobs);
             return (
-                <ViewJob jobs={this.state.jobs} />
+                // <ViewJob jobs={this.state.jobs} />
+                <ViewJob jobs={JSON.parse(sessionStorage.getItem('jobs'))} />
             );
         }
-        // const styles = {
-        //     float: 'none',
-        //     'text-align': 'center',
-        // }
 
         const form = (props) => {
             return (
                 <FormOfInformation />
-                // <FormOfInformation style={styles} />
             )
         }
         
         return (
             // React Router is used to render components based on the route specified
             
-            <Router history={customHistory}>
-                    {/*<ul>
-                        <button ><Link 
-                        to="/PostJob">PostJob</Link></button>
-                        <button >
-                            <Link to="/ViewJob">ViewJob</Link></button>
-                    </ul>*/}
-                    <div>
-                        
-                   <Route path="/" component={navBar} />
+                <div>
+                    <Route path="/" component={navBar} />
                     <div id='postjob'>
-                   <Route path="/PostJob" component={form} />
+                        <Route path="/PostJob" component={form} />
                     </div>
-                   <Route path="/ViewJob" component={viewJob} />
-                   </div>
-            </Router>
+                    <Route path="/ViewJob" component={viewJob} />
+                </div>
         )
     }
 }
