@@ -48,7 +48,7 @@ class ViewJob extends Component {
             return <Job title={dataPoint.title} index={index} description={dataPoint.description} pay={dataPoint.pay} location={dataPoint.address} onClick={() => console.log(index)}/>
         });
         // executes mapController.showMap before this.props.jobs
-        mapController.showMap();
+        // mapController.showMap();
         return (
             <div>
             <div id='location'>

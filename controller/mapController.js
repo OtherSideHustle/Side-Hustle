@@ -1,6 +1,5 @@
 'use strict'
 import App from './../components/App'
-
 const mapController = {
   map: {},
   pos: {lat: 33.979089, lng: -118.422812},
@@ -11,8 +10,12 @@ const mapController = {
   markers: [], 
 
   showMap() {
+    console.log('show map gets used')
+    // const google = window.google;
+    // console.log(google)
     document.getElementById("map").style.display = "block";
     google.maps.event.trigger(mapController.map, 'resize');
+    console.log('is it here')
     mapController.map.setCenter(mapController.pos);
     mapController.placeMarkers(mapController.filteredData);
   }, 
