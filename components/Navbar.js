@@ -11,6 +11,7 @@ class Navbar extends Component {
     render() {
         return (
         <div className="navbar">
+            <button><Link to={{pathname: "/SignUp"}}>Sign Up</Link></button>
             <button><Link to={{pathname: "/LogIn"}}>Log In</Link></button>
             <button><Link to={{pathname: "/PostJob"}}>Post Job</Link></button>
             <button><Link to={{pathname: "/ViewJob"}}>View Job</Link></button>
