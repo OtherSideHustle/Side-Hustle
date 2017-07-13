@@ -46,7 +46,7 @@ class SignUpForm extends React.Component {
         <label className="inputText">
           Password
           <span>  </span>
-          <input className="post-fields" id="password" type="text" ref = {(input) => this.inputPassword = input }/>
+          <input className="post-fields" id="password" type="password" ref = {(input) => this.inputPassword = input }/>
         </label>
         <br />
         <br />
