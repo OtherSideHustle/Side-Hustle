@@ -2,6 +2,7 @@ const expect = require('chai').expect;
 const mongoose = require('mongoose');
 const Form = require('../model/formModel');
 const formController = require('../controller/formController');
+// const db = require('../server/server.js');
 
 // test model validation
 describe('Model', () => {
@@ -53,16 +54,10 @@ describe('Model', () => {
   // *** Make sure to run mongod before running this subset of tests
   describe('mongoDB', () => {
     before((done) => {
-      mongoose.connect('mongodb://localhost/testDb');
-      const db = mongoose.connection;
-      db.on('error', console.error.bind(console, 'connection error'));
-      db.once('open', () => {
-        console.log('Connected to test database');
-        mongoose.connection.db.dropDatabase(() => {
-          console.log('Cleaning - test database dropped');
-        });
-        done();
+      mongoose.connection.db.dropDatabase(() => {
+        console.log('Cleaning - test database dropped');
       });
+      return done();
     });
     it ('should reject invalid data', (done) => {
       const badData = new Form({ notTitle: 'not a title' });
@@ -101,11 +96,11 @@ describe('Model', () => {
         done();
       });
     });
-    after(() => {
-      mongoose.connection.close(() => {
-        console.log('Test database connection closed');
-      });
-    });
+    // after(() => {
+    //   mongoose.connection.close(() => {
+    //     console.log('Test database connection closed');
+    //   });
+    // });
   });
   // !Test model with mock mongoDB
 });
