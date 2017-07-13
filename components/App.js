@@ -86,9 +86,10 @@ class App extends Component {
                 <Switch>
                     <Route path='/SignUp' component={SignUp} />
                     <Route path='/LogIn' component={LogIn} />
-                    <Route path="/PostJob" component={form} />
-                    <Route path="/ViewJob" component={viewJob} />
-                    {/*<PrivateRoute auth={this.state.auth} path='/ViewJob' component={viewJob} />*/}
+                    {/*<Route path="/PostJob" component={form} />*/}
+                    {/*<Route path="/ViewJob" component={viewJob} />*/}
+                    <PrivateRoute auth={this.state.auth} path='/ViewJob' component={viewJob} />
+                    <PrivateRoute auth={this.state.auth} path='/PostJob' component={form} />
                 </Switch>
             </div>
         )

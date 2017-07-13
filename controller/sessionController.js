@@ -3,6 +3,7 @@ const Session = require('./../model/sessionModel');
 const sessionController = {};
 
 sessionController.isLoggedIn = (req, res, next) => {
+  // needs to change react state auth back to false
   console.log('checking if logged in...');
   console.log(req.cookies.ssid);
   if (!req.cookies.ssid) {

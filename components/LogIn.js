@@ -5,6 +5,8 @@ class LogInForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.authorize = this.props.authFunc,
+    this.auth = this.props.auth;
   }
 
   handleSubmit(event) {
@@ -20,7 +22,9 @@ class LogInForm extends React.Component {
       url: 'http://localhost:3000/login',
       data: data
     })
-    .done()
+    .done(
+      this.authorize()
+    )
     .fail(function(err) {
       console.log('failed to register');
     });
