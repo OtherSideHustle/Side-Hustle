@@ -6,6 +6,10 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const formController = require('./../controller/formController');
+const cookieController = require('./../controller/cookieController');
+const sessionController = require('./../controller/sessionController');
+const userController = require('./../controller/userController');
+
 const PORT = 3000;
 if (process.env.NODE_ENV === 'test') {
   console.log('NODE_ENV: Test');
@@ -32,14 +36,42 @@ app.get('/', (req, res) => {
 
 app.get('/api', formController.pullData);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + './../static/post.html'))
-})
 
 app.post('/post', formController.createForm);
+
+// app.get('/signup', (req, res) => {
+//   res.render('./../client/signup', {error: null});
+// });
+
+app.post('/signup', 
+  userController.createUser, 
+  cookieController.setSSIDCookie, 
+  sessionController.startSession,
+  (req, res) => {
+    res.sendStatus(200);
+  }
+);
+
+// app.get('/login', (req, res) => {
+//   res.render('./../client/index');
+// });
+/**
+* login
+*/
+
+app.post('/login', 
+  userController.verifyUser, 
+  cookieController.setSSIDCookie, 
+  sessionController.startSession, 
+  (req, res) => {
+  res.redirect('/jobs');
+});
 // , ((req, res, next) => {
 //   res.sendFile(path.join(__dirname + './../static/post.html'));
 // }));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + './../static/post.html'))
+})
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
 

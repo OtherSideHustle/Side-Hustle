@@ -4,14 +4,19 @@ import ViewJob from './viewJob.js';
 import Job from './Job.js';
 import Navbar from './Navbar.js';
 import FormOfInformation from './Form.js';
+import SignUpForm from './SignUp.js';
+import LogInForm from './LogIn.js';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import $ from 'jquery';
 import mapController from './../controller/mapController'
+import PrivateRoute from './PrivateRoute.js'
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+        this.state.auth = false;
+        this.authorize = this.authorize.bind(this);
     }
 
     retrieveDataFromServer() {
@@ -37,14 +42,28 @@ class App extends Component {
         console.log(JSON.parse(sessionStorage.getItem('jobs')))
     }
 
+    authorize() {
+        this.setState({auth : true});
+    }
+
     render() {
         // ViewJob Component with relevant props passed down 
 
-            const navBar = (props) => {
+        const navBar = (props) => {
             return (
                 <Navbar />
             );
-            }
+        }
+        const SignUp = (props) => {
+            return (
+                <SignUpForm auth={this.state.auth} authFunc={this.authorize}/>
+            );
+        }
+        const LogIn = (props) => {
+            return (
+                <LogInForm auth={this.state.auth} authFunc={this.authorize}/>
+            );
+        }
 
         const viewJob = (props) => {
             console.log('state jobs', this.state.jobs);
@@ -62,14 +81,16 @@ class App extends Component {
         
         return (
             // React Router is used to render components based on the route specified
-            
-                <div>
-                    <Route path="/" component={navBar} />
-                    <div id='postjob'>
-                        <Route path="/PostJob" component={form} />
-                    </div>
+            <div>
+                <Navbar />
+                <Switch>
+                    <Route path='/SignUp' component={SignUp} />
+                    <Route path='/LogIn' component={LogIn} />
+                    <Route path="/PostJob" component={form} />
                     <Route path="/ViewJob" component={viewJob} />
-                </div>
+                    {/*<PrivateRoute auth={this.state.auth} path='/ViewJob' component={viewJob} />*/}
+                </Switch>
+            </div>
         )
     }
 }
