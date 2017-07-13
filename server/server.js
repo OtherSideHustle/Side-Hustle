@@ -6,10 +6,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const formController = require('./../controller/formController');
-
 const PORT = 3000;
-
-mongoose.connect('mongodb://sidehustle:codesmith15@ds151752.mlab.com:51752/sidehustle');
+if (process.env.NODE_ENV === 'test') {
+  console.log('NODE_ENV: Test');
+  mongoose.connect('mongodb://localhost/testDb');
+} else {
+  console.log('NODE_ENV: Development');
+  mongoose.connect('mongodb://sidehustle:codesmith15@ds151752.mlab.com:51752/sidehustle');
+}
 mongoose.connection.once('open', () => {
   console.log('Connected to Database');
 });
@@ -38,3 +42,5 @@ app.post('/post', formController.createForm);
 // }));
 
 app.listen(PORT, () => console.log(`Listening on PORT: ${PORT}`));
+
+// module.exports = db;
