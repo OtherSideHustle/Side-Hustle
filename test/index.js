@@ -5,4 +5,5 @@ require('babel-register')({
 });
 
 require('./unit');
+require('./supertest');
 

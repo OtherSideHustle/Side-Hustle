@@ -13,7 +13,7 @@ const formController = {
     })
     form.save(function(err, doc) {
       if (err) {
-        res.sendStatus(200)
+        res.sendStatus(400);
       } else {
         res.send(doc);
       }
