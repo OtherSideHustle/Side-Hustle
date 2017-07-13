@@ -13,7 +13,7 @@ userContoller.createUser = (req, res, next) => {
       res.locals.userId = user._id;
       next();
     }).catch((err) => {
-      res.render('./../client/signup', { error: err });
+      res.redirect('/');
   })
 };
 
@@ -28,12 +28,12 @@ userContoller.verifyUser = (req, res, next) => {
           next();
         } else{
           console.log('wrong password')
-          res.render('./../client/index', { error: 'Please enter valid username and password.' });
+         res.redirect('/');
         }
       });
     } else {
       console.log('no user')
-      res.render('./../client/index', { error: 'Please enter valid username and password.' });
+      res.redirect('/');
     }
   });
 };

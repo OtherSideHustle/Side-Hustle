@@ -8,7 +8,6 @@ class SignUpForm extends React.Component {
     this.authorize = this.props.authFunc,
     this.auth = this.props.auth;
   }
-
   handleSubmit(event) {
     event.preventDefault();
 
@@ -24,13 +23,13 @@ class SignUpForm extends React.Component {
     })
     .done(
     // if username saved successfully, have ajax success callback  modify the authed flag 
+    // use set timeout to switch back to auth = false;
       this.authorize()
     )
     .fail(function(err) {
       console.log('failed to register');
     });
-}
-
+  }
 
   render() {
     console.log('SIGNUP');
@@ -47,7 +46,7 @@ class SignUpForm extends React.Component {
         <label className="inputText">
           Password
           <span>  </span>
-          <input className="post-fields" id="password" type="text" ref = {(input) => this.inputPassword = input }/>
+          <input className="post-fields" id="password" type="password" ref = {(input) => this.inputPassword = input }/>
         </label>
         <br />
         <br />
